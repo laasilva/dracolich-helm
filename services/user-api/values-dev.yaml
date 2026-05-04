@@ -1,5 +1,5 @@
 image:
-  tag: user-api-1.2.1
+  tag: user-api-1.2.2
 ingress:
   enabled: true
   className: nginx
