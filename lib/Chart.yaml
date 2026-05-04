@@ -1,0 +1,5 @@
+apiVersion: v2
+name: dracolich-service
+description: Shared library chart for dracolich Spring Boot reactive services
+type: library
+version: 0.1.0

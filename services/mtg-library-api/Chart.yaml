@@ -1,0 +1,11 @@
+apiVersion: v2
+name: mtg-library-api
+description: dracolich-mtg-library-api deployment
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+
+dependencies:
+  - name: dracolich-service
+    version: "0.1.0"
+    repository: "file://../../lib"
