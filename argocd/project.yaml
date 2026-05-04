@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: dracolich
+  namespace: argocd
+spec:
+  description: Dracolich services
+  sourceRepos:
+    - https://github.com/laasilva/dracolich-helm.git
+  destinations:
+    - namespace: dracolich-dev
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"

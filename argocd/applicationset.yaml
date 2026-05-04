@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: dracolich-services
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - name: mtg-library-api
+          - name: user-api
+          - name: ai-api
+          - name: deck-builder-api
+  template:
+    metadata:
+      name: '{{name}}'
+    spec:
+      project: dracolich
+      source:
+        repoURL: https://github.com/laasilva/dracolich-helm.git
+        targetRevision: main
+        path: services/{{name}}
+        helm:
+          valueFiles:
+            - values-dev.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: dracolich-dev
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
