@@ -25,8 +25,9 @@ resources:
 
 env:
   SPRING_PROFILES_ACTIVE: dev
-  # Spring relaxed binding maps DRACOLICH_JWT_PRIVATE_KEY env var → dracolich.jwt.private-key property
+  # Spring relaxed binding maps these env vars → jwt.private-key / jwt.public-key properties
   DRACOLICH_JWT_PRIVATE_KEY: file:/etc/dracolich/keys/ec-private.pem
+  DRACOLICH_JWT_PUBLIC_KEY: file:/etc/dracolich/keys/ec-public.pem
 
 # user-api needs: MONGODB_URI, anon cookie secret, AWS SES creds.
 # JWT private key comes from a separate Secret mounted as a file (see volumes below).
