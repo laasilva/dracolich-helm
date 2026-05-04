@@ -27,7 +27,8 @@ env:
   SPRING_PROFILES_ACTIVE: dev
   DRACOLICH_MTG_LIBRARY_API_BASE_URL: http://mtg-library-api:8080/dracolich/mtg-library/api/v0
   DRACOLICH_AI_API_BASE_URL: http://ai-api:8080/dracolich/ai/api/v0
-  JWT_PUBLIC_KEY_PATH: file:/etc/dracolich/keys/ec-public.pem
+  # Spring relaxed binding maps DRACOLICH_JWT_PUBLIC_KEY env var → dracolich.jwt.public-key property
+  DRACOLICH_JWT_PUBLIC_KEY: file:/etc/dracolich/keys/ec-public.pem
 
 envFrom:
   - secretRef:

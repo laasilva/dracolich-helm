@@ -25,9 +25,8 @@ resources:
 
 env:
   SPRING_PROFILES_ACTIVE: dev
-  # Tells the app to load the JWT private key from the mounted file
-  # instead of the classpath default. The path matches volumeMounts below.
-  JWT_PRIVATE_KEY_PATH: file:/etc/dracolich/keys/ec-private.pem
+  # Spring relaxed binding maps DRACOLICH_JWT_PRIVATE_KEY env var → dracolich.jwt.private-key property
+  DRACOLICH_JWT_PRIVATE_KEY: file:/etc/dracolich/keys/ec-private.pem
 
 # user-api needs: MONGODB_URI, anon cookie secret, AWS SES creds.
 # JWT private key comes from a separate Secret mounted as a file (see volumes below).
