@@ -1,0 +1,37 @@
+replicaCount: 1
+
+image:
+  repository: laaasilva/dracolich
+  tag: ai-api-latest
+  pullPolicy: IfNotPresent
+
+service:
+  appPort: 8080
+  managementPort: 7980
+
+probes:
+  livenessPath: /actuator/health/liveness
+  readinessPath: /actuator/health/readiness
+  livenessInitialDelaySeconds: 30
+  readinessInitialDelaySeconds: 10
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 384Mi
+  limits:
+    cpu: 500m
+    memory: 768Mi
+
+env:
+  SPRING_PROFILES_ACTIVE: dev
+
+# ai-api needs: ANTHROPIC_API_KEY, MONGODB_URI, mtg-library-api base URL.
+envFrom:
+  - secretRef:
+      name: ai-api-secrets
+
+# ai-api is internal-only — no Ingress, no public DNS.
+# Only deck-builder-api should reach it (cluster-internal Service DNS).
+ingress:
+  enabled: false

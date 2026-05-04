@@ -1,0 +1,6 @@
+dependencies:
+- name: dracolich-service
+  repository: file://../../lib
+  version: 0.1.0
+digest: sha256:9c2f184acc26d7d3934ea7e7f083b954bbb96aa1fc7ff844db1369232b75b43c
+generated: "2026-05-04T16:03:39.175132-03:00"

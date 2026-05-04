@@ -1,0 +1,7 @@
+image:
+  tag: ai-api-latest
+
+# Stays internal-only in dev. Network policy (later) should restrict ingress
+# to deck-builder-api as the only allowed source pod.
+ingress:
+  enabled: false

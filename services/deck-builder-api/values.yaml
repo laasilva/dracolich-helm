@@ -1,0 +1,44 @@
+replicaCount: 1
+
+image:
+  repository: laaasilva/dracolich
+  tag: deck-builder-api-latest
+  pullPolicy: IfNotPresent
+
+service:
+  appPort: 8080
+  managementPort: 7980
+
+probes:
+  livenessPath: /actuator/health/liveness
+  readinessPath: /actuator/health/readiness
+  livenessInitialDelaySeconds: 30
+  readinessInitialDelaySeconds: 10
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 384Mi
+  limits:
+    cpu: 500m
+    memory: 768Mi
+
+env:
+  SPRING_PROFILES_ACTIVE: dev
+  DRACOLICH_MTG_LIBRARY_API_BASE_URL: http://mtg-library-api:8080/dracolich/mtg-library/api/v0
+  DRACOLICH_AI_API_BASE_URL: http://ai-api:8080/dracolich/ai/api/v0
+
+# deck-builder-api needs: MONGODB_URI, ANON_COOKIE_SECRET, JWT public key (PEM),
+# CORS origins. JWT public key copied from user-api at chart-build time, OR
+# mounted via Secret volume — TBD when user-api ships.
+envFrom:
+  - secretRef:
+      name: deck-builder-api-secrets
+
+ingress:
+  enabled: false
+  className: nginx
+  host: ""
+  path: /dracolich/mtg-deck-builder/api/v0
+  annotations: {}
+  tls: []
