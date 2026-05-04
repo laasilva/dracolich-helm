@@ -51,6 +51,6 @@ ingress:
   enabled: false
   className: nginx
   host: ""
-  path: /dracolich-user/api/v0
+  path: /dracolich/user/api/v0
   annotations: {}
   tls: []

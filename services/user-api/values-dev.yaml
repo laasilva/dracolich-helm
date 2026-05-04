@@ -4,7 +4,7 @@ ingress:
   enabled: true
   className: nginx
   host: dev.dracolich.app
-  path: /dracolich-user/api/v0
+  path: /dracolich/user/api/v0
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
   tls:
