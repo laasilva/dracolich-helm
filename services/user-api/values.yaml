@@ -25,13 +25,27 @@ resources:
 
 env:
   SPRING_PROFILES_ACTIVE: dev
+  # Tells the app to load the JWT private key from the mounted file
+  # instead of the classpath default. The path matches volumeMounts below.
+  JWT_PRIVATE_KEY_PATH: file:/etc/dracolich/keys/ec-private.pem
 
-# user-api needs: MONGODB_URI, JWT private key (PEM), anon cookie secret, AWS SES creds.
-# JWT key is currently classpath:keys/ec-private.pem — switching to an env-injected
-# PEM string requires an app-side config change (or volume-mount via Secrets Store CSI later).
+# user-api needs: MONGODB_URI, anon cookie secret, AWS SES creds.
+# JWT private key comes from a separate Secret mounted as a file (see volumes below).
 envFrom:
   - secretRef:
       name: user-api-secrets
+
+# JWT private key mounted as a file. The Secret `user-api-jwt-keys` is created
+# out-of-band via `kubectl create secret generic ... --from-file=ec-private.pem=...`.
+volumes:
+  - name: jwt-keys
+    secret:
+      secretName: user-api-jwt-keys
+
+volumeMounts:
+  - name: jwt-keys
+    mountPath: /etc/dracolich/keys
+    readOnly: true
 
 ingress:
   enabled: false

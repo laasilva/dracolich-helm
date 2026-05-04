@@ -27,13 +27,23 @@ env:
   SPRING_PROFILES_ACTIVE: dev
   DRACOLICH_MTG_LIBRARY_API_BASE_URL: http://mtg-library-api:8080/dracolich/mtg-library/api/v0
   DRACOLICH_AI_API_BASE_URL: http://ai-api:8080/dracolich/ai/api/v0
+  JWT_PUBLIC_KEY_PATH: file:/etc/dracolich/keys/ec-public.pem
 
-# deck-builder-api needs: MONGODB_URI, ANON_COOKIE_SECRET, JWT public key (PEM),
-# CORS origins. JWT public key copied from user-api at chart-build time, OR
-# mounted via Secret volume — TBD when user-api ships.
 envFrom:
   - secretRef:
       name: deck-builder-api-secrets
+
+# JWT public key (copied from user-api). Created out-of-band:
+# kubectl create secret generic deck-builder-api-jwt-keys --from-file=ec-public.pem=...
+volumes:
+  - name: jwt-keys
+    secret:
+      secretName: deck-builder-api-jwt-keys
+
+volumeMounts:
+  - name: jwt-keys
+    mountPath: /etc/dracolich/keys
+    readOnly: true
 
 ingress:
   enabled: false
