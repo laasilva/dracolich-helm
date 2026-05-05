@@ -1,5 +1,5 @@
 image:
-  tag: deck-builder-api-1.1.5
+  tag: deck-builder-api-1.1.6
 ingress:
   enabled: true
   className: nginx
