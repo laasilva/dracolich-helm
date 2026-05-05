@@ -18,13 +18,16 @@ probes:
 resources:
   requests:
     cpu: 100m
-    memory: 384Mi
+    memory: 512Mi
   limits:
-    cpu: 500m
-    memory: 768Mi
+    cpu: 1000m
+    memory: 1536Mi
 
 env:
   SPRING_PROFILES_ACTIVE: dev
+  # Cap JVM heap below the container limit so the GC kicks in before kubelet
+  # starts an OOMKill. Headroom for native, metaspace, JIT codeheap.
+  JAVA_TOOL_OPTIONS: "-XX:MaxRAMPercentage=70"
 
 # envFrom: list of ConfigMap/Secret refs (mongo URI etc.)
 # Created out-of-band for now (kubectl create secret generic mtg-library-secrets ...).
