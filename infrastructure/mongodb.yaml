@@ -34,6 +34,9 @@ spec:
           ports:
             - containerPort: 27017
               name: mongodb
+          envFrom:
+            - secretRef:
+                name: mongodb-credentials
           volumeMounts:
             - name: data
               mountPath: /data/db
